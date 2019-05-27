@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Message from './Message'
 
+
 class MessageList extends React.Component {
     
     componentWillUpdate() {
@@ -17,6 +18,7 @@ class MessageList extends React.Component {
     }
     
     render() {
+
         if (!this.props.roomId) {
             return (
                 <div className="message-list">
@@ -28,12 +30,13 @@ class MessageList extends React.Component {
         }
         return (
             <div className="message-list">
-                {this.props.messages.map((message, index) => {
-                    return (
-                        <Message key={message.id} username={message.senderId} text={message.text} />
-                    )
-                })}
-            </div>
+            {this.props.messages.map((message, index) => {
+                return (
+                    <Message key={message.id} username={message.senderId} text={message.parts[0].payload.content} />
+                )
+            })}
+
+        </div>
         )
     }
 }

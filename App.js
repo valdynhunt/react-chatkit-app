@@ -18,7 +18,7 @@ class App extends React.Component {
             joinedRooms: []
         }
         this.sendMessage = this.sendMessage.bind(this)
-        this.subscribeToRoom = this.subscribeToRoom.bind(this)
+        this.subscribeToRoomMultipart = this.subscribeToRoomMultipart.bind(this)
         this.getRooms = this.getRooms.bind(this)
         this.createRoom = this.createRoom.bind(this)
     } 
@@ -31,7 +31,8 @@ class App extends React.Component {
                 url: tokenUrl
             })
         })
-        
+    
+
         chatManager.connect()
         .then(currentUser => {
             this.currentUser = currentUser
@@ -50,13 +51,13 @@ class App extends React.Component {
         })
         .catch(err => console.log('error on joinableRooms: ', err))
     }
-    
-    subscribeToRoom(roomId) {
+      
+    subscribeToRoomMultipart(roomId) {
         this.setState({ messages: [] })
-        this.currentUser.subscribeToRoom({
+        this.currentUser.subscribeToRoomMultipart({
             roomId: roomId,
             hooks: {
-                onNewMessage: message => {
+                onMessage: message => {
                     this.setState({
                         messages: [...this.state.messages, message]
                     })
@@ -83,7 +84,7 @@ class App extends React.Component {
         this.currentUser.createRoom({
             name
         })
-        .then(room => this.subscribeToRoom(room.id))
+        .then(room => this.subscribeToRoomMultipart(room.id))
         .catch(err => console.log('error with createRoom: ', err))
     }
     
@@ -91,7 +92,7 @@ class App extends React.Component {
         return (
             <div className="app">
                 <RoomList
-                    subscribeToRoom={this.subscribeToRoom}
+                    subscribeToRoomMultipart={this.subscribeToRoomMultipart}
                     rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}
                     roomId={this.state.roomId} />
                 <MessageList 

@@ -1,9 +1,10 @@
 {
-  "name": "cdRDdfq",
+  "name": "myjson7774321",
   "dependencies": {
+    "@pusher/chatkit-client": "^1.5.0",
+    "@pusher/chatkit-server": "^1.1.0",
     "react": "16.0.0",
-    "react-dom": "16.0.1",
-    "@pusher/chatkit-client": "1.5"
+    "react-dom": "16.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.0",
@@ -15,5 +16,18 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w"
-  }
+  },
+  "description": "Quick start:",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valdynhunt/react-chatkit-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valdynhunt/react-chatkit-app/issues"
+  },
+  "homepage": "https://github.com/valdynhunt/react-chatkit-app#readme"
 }

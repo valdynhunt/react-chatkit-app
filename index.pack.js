@@ -1123,7 +1123,7 @@ var App = function (_React$Component) {
             joinedRooms: []
         };
         _this.sendMessage = _this.sendMessage.bind(_this);
-        _this.subscribeToRoom = _this.subscribeToRoom.bind(_this);
+        _this.subscribeToRoomMultipart = _this.subscribeToRoomMultipart.bind(_this);
         _this.getRooms = _this.getRooms.bind(_this);
         _this.createRoom = _this.createRoom.bind(_this);
         return _this;
@@ -1164,15 +1164,15 @@ var App = function (_React$Component) {
             });
         }
     }, {
-        key: 'subscribeToRoom',
-        value: function subscribeToRoom(roomId) {
+        key: 'subscribeToRoomMultipart',
+        value: function subscribeToRoomMultipart(roomId) {
             var _this4 = this;
 
             this.setState({ messages: [] });
-            this.currentUser.subscribeToRoom({
+            this.currentUser.subscribeToRoomMultipart({
                 roomId: roomId,
                 hooks: {
-                    onNewMessage: function onNewMessage(message) {
+                    onMessage: function onMessage(message) {
                         _this4.setState({
                             messages: [].concat(_toConsumableArray(_this4.state.messages), [message])
                         });
@@ -1203,7 +1203,7 @@ var App = function (_React$Component) {
             this.currentUser.createRoom({
                 name: name
             }).then(function (room) {
-                return _this5.subscribeToRoom(room.id);
+                return _this5.subscribeToRoomMultipart(room.id);
             }).catch(function (err) {
                 return console.log('error with createRoom: ', err);
             });
@@ -1215,7 +1215,7 @@ var App = function (_React$Component) {
                 'div',
                 { className: 'app' },
                 _react2.default.createElement(_RoomList2.default, {
-                    subscribeToRoom: this.subscribeToRoom,
+                    subscribeToRoomMultipart: this.subscribeToRoomMultipart,
                     rooms: [].concat(_toConsumableArray(this.state.joinableRooms), _toConsumableArray(this.state.joinedRooms)),
                     roomId: this.state.roomId }),
                 _react2.default.createElement(_MessageList2.default, {
@@ -1337,6 +1337,7 @@ var MessageList = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+
             if (!this.props.roomId) {
                 return _react2.default.createElement(
                     'div',
@@ -1352,7 +1353,7 @@ var MessageList = function (_React$Component) {
                 'div',
                 { className: 'message-list' },
                 this.props.messages.map(function (message, index) {
-                    return _react2.default.createElement(_Message2.default, { key: message.id, username: message.senderId, text: message.text });
+                    return _react2.default.createElement(_Message2.default, { key: message.id, username: message.senderId, text: message.parts[0].payload.content });
                 })
             );
         }
@@ -1512,7 +1513,7 @@ var RoomList = function (_React$Component) {
                                 'a',
                                 {
                                     onClick: function onClick() {
-                                        return _this2.props.subscribeToRoom(room.id);
+                                        return _this2.props.subscribeToRoomMultipart(room.id);
                                     },
                                     href: '#' },
                                 '# ',
